@@ -1,26 +1,13 @@
-from flask import jsonify
-from app.exceptions import ValidationError
-from . import api
+from functools import wraps
+from flask import g
+from .errors import forbidden
 
-
-def bad_request(message):
-    response = jsonify({'error': 'bad request', 'message': message})
-    response.status_code = 400
-    return response
-
-
-def unauthorized(message):
-    response = jsonify({'error': 'unauthorized', 'message': message})
-    response.status_code = 401
-    return response
-
-
-def forbidden(message):
-    response = jsonify({'error': 'forbidden', 'message': message})
-    response.status_code = 403
-    return response
-
-
-@api.errorhandler(ValidationError)
-def validation_error(e):
-    return bad_request(e.args[0])
+def permission_required(permission):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not g.current_user.can(permission):
+                return forbidden('Insufficient permissions')
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
