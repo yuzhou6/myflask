@@ -14,6 +14,7 @@ class Config:
     FLASKY_COMMENTS_PER_PAGE = 50
     SQLACHEMY_RECORD_QUERIES = True   #new
     FLASKY_SLOW_DB_QUERY_TIME = 0.5   #new
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     @staticmethod
     def init_app(app):
