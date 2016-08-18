@@ -9,6 +9,9 @@ from .. import db
 from ..decorators import permission_required, admin_required
 from flask.ext.sqlalchemy import get_debug_queries
 
+@main.route('/write-article',methods=['GET','POST'])
+def test():
+    return render_template('write-article.html')
 
 @main.route('/', methods=['GET', 'POST'])
 def index():

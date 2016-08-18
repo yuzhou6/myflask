@@ -6,14 +6,14 @@
 #web-navbar-left{
     width: 90px;
     height: 100%;
-    position: absolute;
+    position: fixed;
  }
 
 .web-pic-box{
     margin-left: 90px;
     width: 260px;
     height: 100%;
-    position: absolute;
+    position: fixed;
     background-color: #eee;
     background-image: url("../images/1.jpg");
     background-position: center center;
@@ -33,6 +33,8 @@
 .web-content{
     width:927px;
     margin-left: 360px;
+    display: block;
+    float: left;
 }
 .web-content-title{
     font-size: 17.5px;
@@ -87,6 +89,17 @@
     line-height: 2em;
     text-indent: 0;
     font-size: 15px;
+}
+
+.copyright-link{
+    color: #afafaf;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.web-footer , .web-footer-span{
+    margin-left: 370px;
+    margin-bottom: 10px;
 }
 
 /*.web-article{*/
