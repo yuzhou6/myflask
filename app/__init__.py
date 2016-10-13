@@ -5,6 +5,7 @@ from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.pagedown import PageDown
+from flask.ext.markdown import Markdown
 from config import config
 
 bootstrap = Bootstrap()
@@ -29,6 +30,7 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
+    Markdown(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

@@ -1,4 +1,6 @@
 #! -*- coding: utf-8 -*-
+from markdown import markdown
+
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin, AnonymousUserMixin
@@ -8,7 +10,8 @@ from flask import current_app
 from datetime import datetime
 import hashlib
 from flask import request, url_for
-from markdown import markdown
+# from markdown import markdown
+from flask.ext.markdown import Markdown
 from app.exceptions import ValidationError
 import bleach
 
@@ -289,6 +292,8 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     likes = db.relationship('Like', backref='post', lazy='dynamic')
+    #add
+    post_expect = db.Column(db.Text)
 
     @staticmethod
     def generate_fake(count=100):

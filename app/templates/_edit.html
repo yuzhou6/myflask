@@ -12,10 +12,10 @@
         <div class="form-group required">
             <div class="row">
                 <div class="col-md-6">
-                    {{ form.body(only_input=True, class="input-markdown", placeholder=form.body.label.text, required=True) }}
+                    {{ form.body(only_input=True,onkeyup="adjustObjHeight(this, 50);", class="text mousetrap", style="overflow: hidden; word-wrap: break-word; resize: none; height: 571px; width:100%;", placeholder=form.body.label.text, required=True) }}
                 </div>
                 <div class="col-md-6 hidden-sm hidden-xs">
-                    {{ form.body(only_preview=True) }}
+                    {{ form.body(only_preview=True,class="text mousetrap", style="overflow: hidden; word-wrap: break-word; resize: none; height: 571px; width:100%;") }}
                 </div>
             </div>
         </div>
@@ -25,3 +25,20 @@
         </div>
     </form>
 </div>
+
+<script language="javascript" type="text/javascript">
+
+    function adjustObjHeight(obj, defaultHeight) {
+        if (obj.scrollHeight > defaultHeight) {
+            obj.style.height = obj.scrollHeight + 'px';
+        } else {
+            obj.style.height = defaultHeight + 'px';
+        }
+    }
+    window.onload = function() {
+        var obj = document.getElementsByTagName('textarea');
+        var len = obj.length;
+        for (var i = 0; i < len; i++)
+            adjustObjHeight(obj[i], 571);
+    }
+</script>

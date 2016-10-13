@@ -1,79 +1,141 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}lucat{% endblock %}
+{% block title %}知乎{% endblock %}
 
 {% block head %}
-{{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- css -->
+    <link type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.6.1/fonts/fontawesome-webfont.svg">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/write-default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/write-default.css') }}">
+    {#    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/edit/editor.css') }}">#}
+    <!-- js -->
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="{{ url_for('static',filename='particles/css/style.css') }}" type="text/javascript"></script>
+    {#    <script src="{{ url_for('static', filename='css/edit/editor.js') }}" type="text/javascript"></script>#}
+
+    <style>
+        {#        a:hover{#}
+        {#            background-color: red;#}
+        {#        }#}
+    </style>
+
 {% endblock %}
 
-{% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ url_for('main.index') }}"> lucat </a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('main.new_article')}}">Write article</a></li>
-                {% endif %}
-            </ul>
+<body>
 
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.can(Permission.MODERATE_COMMENTS) %}
-                <li><a href="{{ url_for('main.moderate')}}">管理评论</a></li>
-                {% endif %}
-                {% if current_user.is_authenticated %}
-                <li class="dropdown">
-                    <a href='#' class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ current_user.gravatar(size=18) }}"> {{ current_user.username }} <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人主页</a></li>
-                        <li><a href="{{ url_for('auth.change_password')}}">修改密码</a></li>
-                        <li><a href="{{ url_for('auth.change_email_request')}}">修改邮箱</a></li>                        
-                        <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li><a href="{{ url_for('auth.register') }}">注册</a></li>
-                <li><a href="{{ url_for('auth.login') }}">登录</a></li>
-                {% endif %}
-            </ul>
+{% block navbar %}
+    <div class="navbar" style="background-color: #086ed5;" role="navigation">
+        <div class="container">
+            <div class="navbar-header" >
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white"> 知乎</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li style="margin-top: 10px;margin-left: 10px;margin-right: 20px;" class="hidden-xs">
+                        <form class="form-horizontal form-inline" style="display: inline; float: right" class="wrapper">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="search" id="search">
+                                <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.new_article')}}" style="color: white;background-color: #086ed5;margin-left: 20px;">发表文章</a></li>
+                    {% endif %}
+                     　　<li><a href="{{ url_for('main.new_article')}}" style="color: white;background-color: #086ed5;">热门话题</a></li>
+
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.can(Permission.MODERATE_COMMENTS) %}
+                        <li><a href="{{ url_for('main.moderate')}}">管理评论</a></li>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <li class="dropdown">
+                            <a href='#' class="dropdown-toggle" data-toggle="dropdown" style="background-color: #086ed5;color:white;" 　>
+                                <img src="{{ current_user.gravatar(size=18) }}" > <span style="color:white;">{{ current_user.username }} </span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人主页</a></li>
+                                <li><a href="{{ url_for('auth.change_password')}}">修改密码</a></li>
+                                <li><a href="{{ url_for('auth.change_email_request')}}">修改邮箱</a></li>
+                                <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.register') }}" style="background-color: #086ed5;color:white;">注册</a></li>
+                        <li><a href="{{ url_for('auth.login') }}" style="background-color: #086ed5;color:white;">登录</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class='col-md-9 col-sm-9'>
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
+    <div class="container">
+        <div class="row">
+            <div class='col-md-9 col-sm-9'>
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
+        {% block page_content %}{% endblock %}
+
     </div>
-    
-    {% block page_content %}{% endblock %}
-</div>
 {% endblock %}
+</body>
 
 {% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{{ moment.lang("zh-CN") }}
-{{ pagedown.include_pagedown() }}
+    {{ super() }}
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js" type="text/javascript"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="{{ url_for('static',filename='canvas-particle.js') }}" type="text/javascript"></script>
+    {#    <script src="{{ url_for('static',filename='particles/js/app.js') }}" type="text/javascript"></script>#}
+    {#    <script src="{{ url_for('static',filename='particles/js/lib/stats.js') }}" type="text/javascript"></script>#}
+
+  <script>
+  window.onload = function(){
+    //配置
+    var config = {
+        vx: 2,//点x轴速度,正为右，负为左
+        vy:  2,//点y轴速度
+        height: 2,//点高宽，其实为正方形，所以不宜太大
+        width: 2,
+        count: 200,//点个数
+        color: "121, 162, 185",//点颜色
+        stroke: "130,255,255",//线条颜色
+        dist: 6000,//点吸附距离
+        e_dist: 20000,//鼠标吸附加速距离
+        max_conn: 10//点到点最大连接数
+    }
+    //调用
+    CanvasParticle(config);
+}
+  </script>
+
+    {{ moment.include_moment() }}
+    {{ moment.lang("zh-CN") }}
+    {{ pagedown.include_pagedown() }}
 {% endblock%}
